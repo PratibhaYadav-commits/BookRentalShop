@@ -39,9 +39,14 @@ def totalCharge(duration, btype):
 	
 	if btype.lower() == "fiction":
 		total = fictionRate * duration
-
-	elif btype.lower() == "regular" or btype.lower() == "novel" : 
-		total = regularAndNovelRate * duration
+	elif btype.lower() == "regular":
+		if duration<=2 :
+			total =2
+		else : total = ((duration - 2)*1.5) + 2
+	elif btype.lower() == "novel" :
+		if duration<3 :
+			total =4.5
+		else : total = ((duration - 2)*1.5) + 4.5
 	else : 
 		abort(400)
 
