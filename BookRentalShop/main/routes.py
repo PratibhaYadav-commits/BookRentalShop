@@ -1,10 +1,10 @@
-from flask import Blueprint, render_template, jsonify, request
+from flask import Blueprint, render_template, jsonify, request, abort
 
 main = Blueprint('main', __name__)
 
 @main.route("/calculate", methods=['POST'])
 def calculate():
-	# [{"book_name":"seeta","duration":"2"},{"book_name":"PRATIBHA YADAV","duration":"3"}]
+	
 	req = request.json
 	grandTotal=0
 	bookDetailsList=[]
@@ -12,11 +12,12 @@ def calculate():
 		d = {}
 		bname=obj['book_name']
 		duration=int(obj['duration'])
-		total=totalCharge(duration)
-		bookDetails = dict(book_name=bname, duration=duration, total=total)
+		btype=obj['book_type']
+		total=totalCharge(duration, btype)
+		bookDetails = dict(book_name=bname, duration=duration, book_type=btype.title(), total=total)
 		bookDetailsList.append(bookDetails)
 
-		grandTotal+=duration
+		grandTotal+=total
 
 
 	data = {
@@ -31,6 +32,17 @@ def calculate():
 def home():
     return render_template('index.html')
 
-def totalCharge(duration):
-	rate = 1
-	return duration*rate;
+def totalCharge(duration, btype):
+	regularAndNovelRate = 1.5
+	fictionRate = 3
+	total=0.0
+	
+	if btype.lower() == "fiction":
+		total = fictionRate * duration
+
+	elif btype.lower() == "regular" or btype.lower() == "novel" : 
+		total = regularAndNovelRate * duration
+	else : 
+		abort(400)
+
+	return total

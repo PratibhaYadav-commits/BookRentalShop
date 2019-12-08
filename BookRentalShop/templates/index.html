@@ -25,7 +25,16 @@
             <div class="row">
                 <div id="field-container" class="col s12">
                     <div class="row clone">
-                        <div class="input-field col s9">
+                        <div class="col s2">
+                            <label>Book Type</label>
+                            <select class="browser-default" name="book_type">
+                              <option value="regular">Regular</option>
+                              <option value="novel">Novel</option>
+                              <option value="fiction">Fiction</option>
+                            </select>
+                            <span class="helper-text" data-error="wrong" data-success="right"></span>
+                        </div>
+                        <div class="input-field col s7">
                             <input id="book_name" type="text" name="book_name">
                             <label for="book_name">Book Name</label>
                             <span class="helper-text" data-error="wrong" data-success="right"></span>
@@ -67,6 +76,7 @@
               <table>
                     <thead>
                       <tr>
+                          <th>Book Type</th>
                           <th style="width: 60%;">Book Name</th>
                           <th>Duration</th>
                           <th>Total</th>
@@ -79,6 +89,7 @@
                     <tfoot>
                         <tr>
                             <th>Grand Total</th>
+                            <th></th>
                             <th></th>
                             <th>&#8377; 100</th>
                         </tr>

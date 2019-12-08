@@ -10,9 +10,11 @@ $(document).ready(function(){
         $.each(rows, function(i, row){
             let _book_name = $(row).find('input[name=book_name]');
             let _duration = $(row).find('input[name=duration]');
+            let _book_type = $(row).find('[name=book_type]');
             let d = {};
             d.book_name = _book_name.val();
             d.duration = _duration.val();
+            d.book_type = _book_type.val();
             data.push(d);
             if(isNullOrEmpty(_book_name) || !isNumber(_duration)){
                 isInvalid = true;
@@ -113,6 +115,7 @@ function calculate(data){
             $('tbody').empty();
             $.each(result['data'], function(i, v){
                 let tr = '<tr>'+
+                '<td>'+v['book_type']+'</td>'+
                 '<td>'+v['book_name']+'</td>'+
                 '<td>'+v['duration']+'</td>'+
                 '<td>&#8377; '+v['total']+'</td>'+
@@ -121,9 +124,12 @@ function calculate(data){
                 $('tbody').append(tr);
             });
 
-            $('tfoot').find('th').eq(2).html("&#8377; "+result['grand_total']);
+            $('tfoot').find('th').eq(3).html("&#8377; "+result['grand_total']);
             var instance = M.Modal.getInstance($('#receipt_model'));
             instance.open();
+        },
+        error: function(xhr,status,error){
+            alert(error)
         },
         data: JSON.stringify(data)
     });
